@@ -27,7 +27,7 @@
 				<li class="relative">
 					<span
 						aria-hidden="true"
-						class="absolute top-2 -left-[1.8125rem] size-2 rounded-full bg-accent"
+						class="absolute top-2 -left-7.25 size-2 rounded-full bg-accent"
 					></span>
 					<p class="font-mono text-sm text-accent">{entry.period}</p>
 					<p class="mt-0.5 font-medium">{entry.title}</p>

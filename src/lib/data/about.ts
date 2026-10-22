@@ -17,7 +17,7 @@ export const about = {
 		{
 			period: '2023',
 			title: 'Left UTK',
-			detail: 'Resumed a B.S. in Computer Science with a focus on systems, distributed computing, and AI.'
+			detail: 'Withdrew from UTK; began freelancing.'
 		},
 		{
 			period: '2021',
@@ -27,7 +27,7 @@ export const about = {
 		{
 			period: '2019',
 			title: 'First attempt at college',
-			detail: 'Began attempting a B.S. Neuroscience with a Pre-Med concentration followed by a B.A. Linguistics at University of Tennessee Knoxville.'
+			detail: 'Attempted a B.S. Neuroscience with a Pre-Med concentration followed by a B.A. Linguistics at University of Tennessee Knoxville.'
 		},
 	]
 } as const;

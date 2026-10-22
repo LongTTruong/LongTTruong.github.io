@@ -40,8 +40,9 @@ export const projects = [
 					'A stale leader cannot write after losing its lease. Failover target: under 5 seconds.'
 			}
 		],
-		demo: 'https://example.com/demo/control-plane',
-		repo: 'https://github.com/your-handle/control-plane'
+		// Make a project that I can demo live
+		// demo: 'https://example.com/demo/control-plane',
+		repo: 'https://github.com/LongTTruong/control-plane'
 	},
 	{
 		slug: 'stream-ingest',
@@ -72,33 +73,36 @@ export const projects = [
 				detail: 'Bad events never block the stream and can be replayed after a fix.'
 			}
 		],
-		demo: 'https://example.com/demo/stream-ingest',
-		repo: 'https://github.com/your-handle/stream-ingest'
+		// Same with this one
+		// demo: 'https://example.com/demo/stream-ingest',
+		repo: 'https://github.com/LongTTruong/stream-ingest'
 	},
 	{
-		slug: 'agent-harness',
-		path: '~/projects/agent-harness',
-		name: 'Agent Harness',
+		slug: 'med-bud',
+		path: '~/projects/med-bud',
+		name: 'MedBud',
 		summary:
-			'Deterministic execution harness for LLM agents: typed tools, replayable runs, and enforced budgets.',
-		stack: ['Python', 'TypeScript', 'SQLite'],
+			'Deterministic execution harness for local LLM agent performing patient symptom triage and scheduler system for patient medication adherence.',
+		stack: ['Python', 'TypeScript', 'SvelteKit', 'PostGreSQL', 'Qwen2.5 7B'],
 		diagram: [
-			{ label: 'Task spec', detail: 'Goal, tools, and budget' },
-			{ label: 'Planner', detail: 'LLM proposes the next step' },
+			{ label: 'Twilio SMS/WhatsApp', detail: 'Patient-system interaction interface' },
+			{ label: 'Classifier', detail: 'LLM classifies SMS message intent and deterministically invokes MCP tools' },
 			{ label: 'Tool gateway', detail: 'Allowlisted, schema-validated calls' },
+			{ label: 'Scheduler', detail: 'Event-driven medication adherence' },
+			{ label: 'Caregiver Dashboard', detail: 'Administrator dashboard to handle alerts and events' },
 			{ label: 'Run log', detail: 'Append-only, replayable' }
 		],
 		decisions: [
 			{
 				title: 'Replayable runs',
 				detail:
-					'Every model and tool result is logged, so a run can be replayed and debugged without new model calls.'
+					'Model and tool result is logged, so a run can be replayed and debugged without new model calls.'
 			},
 			{
-				title: 'Budgets enforced outside the model',
-				detail: 'Step and token caps live in the harness, so a runaway agent cannot override them.'
+				title: 'Local deployment',
+				detail: 'Unlimited token usage on consumer-grade hardware while achieving high accuracy.'
 			}
 		],
-		repo: 'https://github.com/your-handle/agent-harness'
+		repo: 'https://github.com/LongTTruong/MedBud'
 	}
 ] as const satisfies readonly Project[];
