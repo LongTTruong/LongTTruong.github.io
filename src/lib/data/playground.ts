@@ -172,5 +172,5 @@ export const scenarios = [
 				].join('\n')
 			}
 		]
-	}
+	},
 ] as const satisfies readonly Scenario[];

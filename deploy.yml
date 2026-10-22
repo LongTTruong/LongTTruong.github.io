@@ -26,7 +26,6 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          # Project site => '/repo-name'. For a <user>.github.io repo, set this to ''.
           BASE_PATH: ''
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
