@@ -1,6 +1,6 @@
-import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import { execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
@@ -19,22 +19,39 @@ function commitHash(): string {
 	}
 }
 
+const hash = commitHash();
+// Project site: BASE_PATH=/repo-name (set in CI). User site (<user>.github.io): leave empty.
+const base = (process.env.BASE_PATH ?? '') as '' | `/${string}`;
 
-export default defineConfig({
-	plugins: [
-		tailwindcss(),
-		sveltekit({
-			compilerOptions: {
-				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
-				runes: ({ filename }) =>
-					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
-			},
-			adapter: adapter()
-		})
-	],
-	define: {
-		__APP_VERSION__: JSON.stringify(pkg.version),
-		__COMMIT_HASH__: JSON.stringify(commitHash())
+export default defineConfig(({ command, isPreview }) => {
+	const dev = command === 'serve' && !isPreview;
 
-	}
+	return {
+		plugins: [
+			// tailwindcss() must come before sveltekit()
+			tailwindcss(),
+			sveltekit({
+				adapter: adapter({
+					pages: 'build',
+					assets: 'build',
+					fallback: undefined, // fully pre-rendered, no SPA fallback
+					precompress: false,
+					strict: true
+				}),
+				paths: { base: dev ? '' : base },
+				prerender: {
+					handleHttpError: 'fail',
+					handleMissingId: 'fail'
+				},
+				// Deterministic version name (commit-based) instead of a build timestamp.
+				version: { name: hash },
+				// Inline the page's CSS into the HTML so first paint doesn't wait on a stylesheet request.
+				inlineStyleThreshold: 100_000
+			})
+		],
+		define: {
+			__APP_VERSION__: JSON.stringify(pkg.version),
+			__COMMIT_HASH__: JSON.stringify(hash)
+		}
+	};
 });
