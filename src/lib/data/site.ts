@@ -8,7 +8,7 @@ export const site = {
 	description:
 		'Back-end pipelines, control planes, and deterministic AI agent systems. Open to internships and freelance work.',
 	// Deployed URL WITH trailing slash (include the repo path for a GitHub Pages project site).
-	url: 'https://LongTTruong.github.io/LongTruongGithub.io',
+	url: 'https://longttruong.github.io/',
 	// File in /static, used for link previews (1200x630 PNG).
 	ogImage: 'og.png',
 	email: 'longtruong31@gmail.com',
