@@ -17,67 +17,6 @@ export interface Project {
 // Placeholder content. Replace descriptions, links and every metric with real, measured values.
 export const projects = [
 	{
-		slug: 'control-plane',
-		path: '~/projects/control-plane',
-		name: 'Control Plane',
-		summary: 'Declarative job scheduler that reconciles desired and actual state across worker nodes.',
-		stack: ['Go', 'etcd', 'gRPC'],
-		diagram: [
-			{ label: 'Spec API', detail: 'Validates and stores desired state' },
-			{ label: 'State store', detail: 'Versioned keys with watch streams' },
-			{ label: 'Reconciler', detail: 'Diffs desired vs actual, issues commands' },
-			{ label: 'Workers', detail: 'Execute jobs and report status' }
-		],
-		decisions: [
-			{
-				title: 'Level-triggered reconciliation',
-				detail:
-					'Re-derives work from current state each cycle instead of replaying events, so missed events self-heal. Cost: extra reads per cycle.'
-			},
-			{
-				title: 'Leader election with fencing tokens',
-				detail:
-					'A stale leader cannot write after losing its lease. Failover target: under 5 seconds.'
-			}
-		],
-		// Make a project that I can demo live
-		// demo: 'https://example.com/demo/control-plane',
-		repo: 'https://github.com/LongTTruong/control-plane'
-	},
-	{
-		slug: 'stream-ingest',
-		path: '~/projects/stream-ingest',
-		name: 'Stream Ingest Pipeline',
-		summary:
-			'Ingests event streams, validates schemas, and lands partitioned data with at-least-once delivery.',
-		stack: ['Go', 'Kafka', 'Postgres'],
-		diagram: [
-			{ label: 'Producers', detail: 'Emit versioned events' },
-			{ label: 'Schema gate', detail: 'Rejects invalid events to a dead-letter queue' },
-			{ label: 'Partitioned queue', detail: 'Bounded, keyed by entity' },
-			{ label: 'Batch writer', detail: 'Idempotent upserts in batches' },
-			{ label: 'Warehouse', detail: 'Query-ready tables' }
-		],
-		decisions: [
-			{
-				title: 'At-least-once with idempotent writes',
-				detail:
-					'Duplicates are absorbed by upsert keys, which is simpler and cheaper than exactly-once coordination.'
-			},
-			{
-				title: 'Bounded queues for backpressure',
-				detail: 'Slow sinks slow producers instead of exhausting memory. Failure mode: higher tail latency.'
-			},
-			{
-				title: 'Dead-letter queue for schema failures',
-				detail: 'Bad events never block the stream and can be replayed after a fix.'
-			}
-		],
-		// Same with this one
-		// demo: 'https://example.com/demo/stream-ingest',
-		repo: 'https://github.com/LongTTruong/stream-ingest'
-	},
-	{
 		slug: 'med-bud',
 		path: '~/projects/med-bud',
 		name: 'MedBud',
@@ -104,5 +43,62 @@ export const projects = [
 			}
 		],
 		repo: 'https://github.com/LongTTruong/MedBud'
-	}
+	},
+	{
+		slug: 'make-memphis-marvelous',
+		path: '~/projects/M3',
+		name: 'M3 - Make Memphis Marvelous',
+		summary: 'Fine-tuned object detection model harness based on Yolov8 trained on instances on city blight.',
+		stack: ['Python', 'FastAPI'],
+		diagram: [
+			{ label: 'API', detail: 'HTTP requests initiate pipeline' },
+			{ label: 'Image Scraper', detail: 'Identified and downloaded Google Street View Images' },
+			{ label: 'Data Ingestion', detail: 'Images are encrypted, encoded into base64, and sent as a JSON object over https from edge endpoint to server' },
+			{ label: 'Analysis Script', detail: 'Draws bounding boxes over all instances of city blight detected in image store with confidence scores' },
+		],
+		decisions: [
+			{
+				title: 'Base64 Codec',
+				detail:
+					'Enables easy data interoperability between differing edge devices, image formats, and image sources.'
+			},
+			{
+				title: 'Harnessed vision detection model',
+				detail:
+					'Increased reliability and deterministic model actions. Easily extensible to include more modern orchestrator agents or dropped into a proper CI/CD/MLOps pipeline.'
+			}
+		],
+		// Make a project that I can demo live
+		// demo: 'https://example.com/demo/control-plane',
+		repo: 'https://github.com/LongTTruong/M3Server'
+	},
+	{
+		slug: 'personal-website',
+		path: '~/projects/personal-website',
+		name: 'Personal and professional website for Long Truong',
+		summary:
+			'This website.',
+		stack: ['SvelteKit', 'Github Actions', 'Git', 'Tailwind CSS', 'TypeScript'],
+		diagram: [
+			{ label: 'Website', detail: 'It\'s a static website. Nothing really to say here' },
+		],
+		decisions: [
+			{
+				title: 'MeltUI',
+				detail:
+					'Easy-to-build accessible component library.'
+			},
+			{
+				title: 'Prerendered',
+				detail: 'Compiled Svelte to efficient JavaScript and prerendered the site to further improve site performance.'
+			},
+			{
+				title: 'Sonnet 5.5',
+				detail: 'Carefully guided and instructed based on preliminary design document to ensure data coherency and ease of future development.'
+			}
+		],
+		// Same with this one
+		// demo: 'https://example.com/demo/stream-ingest',
+		repo: 'https://github.com/LongTTruong/LongTTruong.github.io'
+	},
 ] as const satisfies readonly Project[];

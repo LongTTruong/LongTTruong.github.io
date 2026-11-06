@@ -12,7 +12,7 @@ export const about = {
 		{
 			period: '2026',
 			title: 'Returned to college',
-			detail: 'Resumed a B.S. in Computer Science with a focus on systems, distributed computing, and AI.'
+			detail: 'Began a B.S. in Computer Science with a focus on systems, distributed computing, and AI.'
 		},
 		{
 			period: '2023',
